@@ -118,12 +118,13 @@ async function requestRegisterOtp(req, res) {
       expiresMinutes
     );
 
-    // send OTP to email
+    // Respond immediately; send email in background (avoids slow API when SMTP is slow)
+    res.json({ message: 'Verification code sent to email' });
     const text = `Your verification code is: ${code}`;
     const html = `<p>Your verification code is: <strong>${code}</strong></p>`;
-    await sendMail({ to: emailValue, subject: 'Your registration verification code', text, html });
-
-    res.json({ message: 'Verification code sent to email' });
+    sendMail({ to: emailValue, subject: 'Your registration verification code', text, html }).catch((err) =>
+      console.error('Registration OTP email failed', err)
+    );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -159,11 +160,12 @@ async function resendRegisterOtp(req, res) {
     };
     const { code } = await RegistrationOTP.createOtp(payload, expiresMinutes);
 
+    res.json({ message: 'Verification code sent to email' });
     const text = `Your verification code is: ${code}`;
     const html = `<p>Your verification code is: <strong>${code}</strong></p>`;
-    await sendMail({ to: emailValue, subject: 'Your registration verification code', text, html });
-
-    res.json({ message: 'Verification code sent to email' });
+    sendMail({ to: emailValue, subject: 'Your registration verification code', text, html }).catch((err) =>
+      console.error('Resend OTP email failed', err)
+    );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -224,16 +226,14 @@ async function forgotPassword(req, res) {
 
     const { token: resetPlain } = await require('../models/PasswordResetToken').createToken(user._id, parseInt(process.env.RESET_TOKEN_EXPIRES_HOURS || '1', 10));
 
-    // send email with reset link
     const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${resetPlain}`;
-    await sendMail({
+    res.json({ message: 'If the email exists, a reset link has been sent.' });
+    sendMail({
       to: user.email,
       subject: 'Password reset',
       text: `Use this link to reset your password: ${resetUrl}`,
       html: `<p>Use this link to reset your password: <a href="${resetUrl}">${resetUrl}</a></p>`
-    });
-
-    res.json({ message: 'If the email exists, a reset link has been sent.' });
+    }).catch((err) => console.error('Password reset email failed', err));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });

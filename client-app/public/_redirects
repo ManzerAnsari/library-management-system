@@ -1,0 +1,2 @@
+# SPA fallback: serve index.html for all routes (fixes reload / direct links on Render, Netlify, etc.)
+/*    /index.html   200
