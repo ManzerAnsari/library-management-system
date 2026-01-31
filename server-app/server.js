@@ -19,7 +19,8 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 app.use(morgan(process.env.LOG_FORMAT || 'dev'));
 app.use(helmet());
 app.use(cookieParser());
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+// app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
