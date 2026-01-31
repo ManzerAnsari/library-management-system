@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Theme – use with Tailwind classes: bg-primary, text-muted-foreground, etc.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Primary – main brand / actions */
+  --color-primary: #2563eb;
+  --color-primary-foreground: #ffffff;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-muted: #dbeafe;
+
+  /* Secondary – subtle actions / surfaces */
+  --color-secondary: #64748b;
+  --color-secondary-foreground: #ffffff;
+  --color-secondary-muted: #f1f5f9;
+
+  /* Accent – highlights, links */
+  --color-accent: #0ea5e9;
+  --color-accent-foreground: #ffffff;
+  --color-accent-muted: #e0f2fe;
+
+  /* Neutral / UI */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-muted: #f8fafc;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #2563eb;
+
+  /* Semantic */
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-destructive-muted: #fef2f2;
+  --color-success: #16a34a;
+  --color-success-muted: #f0fdf4;
+  --color-warning: #d97706;
+  --color-warning-muted: #fffbeb;
+
+  /* Card / surface */
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+
+  /* Radius – use rounded-lg, rounded-md, etc. via Tailwind or custom */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+
+  /* Font families (optional – use font-sans, font-mono in Tailwind) */
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Base / boilerplate
+   --------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100%;
+  line-height: 1.5;
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+}
+
+#root {
+  min-height: 100%;
+  isolation: isolate;
+}
+
+/* Smooth scroll (optional – disable if you use custom scroll) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Focus visible – keyboard focus ring, no ring on mouse click */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary-muted);
+  color: var(--color-foreground);
+}
+
+/* Links – base style; override in components as needed */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Form elements – consistent with theme */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Images / media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove default list styles where lists are used for UI */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Prevent overflow on pre/code */
+pre,
+code {
+  max-width: 100%;
+  overflow-x: auto;
+}
