@@ -39,8 +39,8 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-muted/30">
-      <Card title="Login" className="w-full max-w-md shadow-sm">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-muted/30 box-border">
+      <Card title="Login" className="w-full max-w-md max-w-[calc(100vw-2rem)] shadow-sm">
         <Form
           name="login"
           layout="vertical"

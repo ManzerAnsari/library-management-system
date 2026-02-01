@@ -174,7 +174,7 @@ export default function Profile() {
               />
 
               {/* Content - above watermark */}
-              <div style={{ position: 'relative', zIndex: 1, padding: '20px 24px 24px' }}>
+              <div className="px-4 py-5 sm:px-6 sm:py-6" style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ textAlign: 'center', marginBottom: 20 }}>
                   <div style={{ fontSize: 11, letterSpacing: 3, color: '#1e40af', fontWeight: 600, marginBottom: 4 }}>
                     LIBRARY MANAGEMENT SYSTEM

@@ -23,7 +23,7 @@ export default function AdminDashboard() {
       </div>
       <Row gutter={[16, 16]}>
         {cards.map(({ path, icon, title, desc }) => (
-          <Col xs={24} sm={12} md={8} key={path}>
+          <Col xs={24} sm={12} lg={6} key={path}>
             <Link to={path} style={{ textDecoration: 'none' }}>
               <Card hoverable style={{ height: '100%' }}>
                 <Space size="middle">

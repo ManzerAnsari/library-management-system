@@ -145,9 +145,9 @@ export default function AdminUsers() {
 
   return (
     <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <Title level={4} style={{ margin: 0 }}>Users</Title>
-        <Space.Compact>
+      <div className="flex flex-wrap gap-3 w-full items-center justify-between">
+        <Title level={4} style={{ margin: 0 }} className="!mb-0">Users</Title>
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto sm:min-w-[260px]">
           <Input
             placeholder="Search by name or email"
             value={search}
@@ -155,20 +155,21 @@ export default function AdminUsers() {
             onPressEnter={handleSearch}
             allowClear
             prefix={<SearchOutlined />}
-            style={{ width: 260 }}
+            className="flex-1 min-w-0 sm:w-[260px]"
           />
-          <Button type="primary" icon={<PlusOutlined />} onClick={openAddUser} style={{ marginLeft: 8 }}>
+          <Button type="primary" icon={<PlusOutlined />} onClick={openAddUser}>
             Add user
           </Button>
-        </Space.Compact>
+        </div>
       </div>
 
-      <Card>
+      <Card className="overflow-x-auto">
         <Spin spinning={loading}>
           <Table
             rowKey="_id"
             columns={columns}
             dataSource={users}
+            scroll={{ x: 'max-content' }}
             pagination={{
               current: page,
               pageSize: limit,
@@ -176,6 +177,8 @@ export default function AdminUsers() {
               showSizeChanger: false,
               showTotal: (t) => `Total ${t} users`,
               onChange: setPage,
+              responsive: true,
+              size: 'small',
             }}
           />
         </Spin>
@@ -189,6 +192,7 @@ export default function AdminUsers() {
         confirmLoading={addSubmitLoading}
         destroyOnClose
         width={420}
+        style={{ maxWidth: 'calc(100vw - 32px)' }}
       >
         <Form form={addForm} layout="vertical" preserve={false}>
           <Form.Item name="fullname" label="Full name" rules={[{ required: true, message: 'Required' }]}>

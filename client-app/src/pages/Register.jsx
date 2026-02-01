@@ -100,7 +100,7 @@ export default function Register() {
         .register-page-form .ant-form-item { margin-bottom: 20px !important; }
         .register-page-form .ant-form-item:last-of-type { margin-bottom: 0 !important; }
       `}</style>
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-muted/40">
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-muted/40 min-w-0">
       {/* Left: branding */}
       <div className="hidden md:flex flex-col justify-center items-center p-12! lg:p-20! bg-primary text-primary-foreground rounded-r-3xl shadow-xl">
         <div className="w-full max-w-xs space-y-1">
@@ -128,7 +128,7 @@ export default function Register() {
 
       {/* Right: form */}
       <div className="register-page-wrapper flex flex-col justify-center items-center p-8! md:p-12!">
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-lg min-w-0 px-2 sm:px-0">
           {/* Step 1: Registration form */}
           {step === 1 && (
             <div className="register-page-card rounded-2xl border border-border bg-card shadow-sm p-8! md:p-10!">

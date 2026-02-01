@@ -251,32 +251,33 @@ export default function Books() {
   ].filter(Boolean);
 
   return (
-    <Space orientation="vertical" size="middle" style={{ width: '100%' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <Title level={4} style={{ margin: 0 }}>Books</Title>
-        <Space.Compact>
+    <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <div className="flex flex-wrap gap-3 w-full items-center justify-between">
+        <Title level={4} style={{ margin: 0 }} className="!mb-0">Books</Title>
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto sm:min-w-[260px]">
           <Input
             placeholder="Search by title, author, ISBN"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onPressEnter={handleSearch}
             allowClear
-            style={{ width: 260, padding: 6 }}
+            className="flex-1 min-w-0 sm:w-[260px]"
           />
           {hasManageRole && (
-            <Button type="primary" icon={<PlusOutlined />} onClick={openAddBook} style={{ marginLeft: 8 }}>
+            <Button type="primary" icon={<PlusOutlined />} onClick={openAddBook}>
               Add book
             </Button>
           )}
-        </Space.Compact>
+        </div>
       </div>
 
-      <Card>
+      <Card className="overflow-x-auto">
         <Spin spinning={loading}>
           <Table
             rowKey="_id"
             columns={tableColumns}
             dataSource={books}
+            scroll={{ x: 'max-content' }}
             pagination={{
               current: page,
               pageSize: limit,
@@ -284,6 +285,8 @@ export default function Books() {
               showSizeChanger: false,
               showTotal: (t) => `Total ${t} books`,
               onChange: setPage,
+              responsive: true,
+              size: 'small',
             }}
           />
         </Spin>
@@ -298,6 +301,7 @@ export default function Books() {
         confirmLoading={bookSubmitLoading}
         destroyOnClose
         width={480}
+        style={{ maxWidth: 'calc(100vw - 32px)' }}
       >
         <Form form={bookForm} layout="vertical" preserve={false}>
           <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Required' }]}>

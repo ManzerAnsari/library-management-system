@@ -133,11 +133,11 @@ export default function Borrowings() {
 
   return (
     <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <Title level={4} style={{ margin: 0 }}>
+      <div className="flex flex-wrap gap-3 w-full items-center justify-between">
+        <Title level={4} style={{ margin: 0 }} className="!mb-0">
           {isLibrarianOrAdmin ? 'Borrowings (Issue / Return)' : 'My Borrowings'}
         </Title>
-        <Space.Compact>
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           {isLibrarianOrAdmin && (
             <Input
               placeholder="Search by book or borrower"
@@ -145,25 +145,26 @@ export default function Borrowings() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               allowClear
-              style={{ width: 240 }}
+              className="flex-1 min-w-0 sm:w-[240px]"
             />
           )}
           <Select
             value={status || undefined}
             onChange={(v) => { setStatus(v ?? ''); setPage(1); }}
             options={STATUS_OPTIONS}
-            style={{ width: 140 }}
+            className="w-full sm:w-[140px]"
             placeholder="Status"
             allowClear
           />
-        </Space.Compact>
+        </div>
       </div>
-      <Card>
+      <Card className="overflow-x-auto">
         <Spin spinning={loading}>
           <Table
             rowKey="_id"
             columns={columns}
             dataSource={list}
+            scroll={{ x: 'max-content' }}
             pagination={{
               current: page,
               pageSize: limit,
@@ -171,6 +172,8 @@ export default function Borrowings() {
               showSizeChanger: false,
               showTotal: (t) => `Total ${t}`,
               onChange: setPage,
+              responsive: true,
+              size: 'small',
             }}
           />
         </Spin>

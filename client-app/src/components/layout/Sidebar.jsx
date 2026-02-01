@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Layout, Menu, Typography } from "antd";
+import { Layout, Menu, Typography, Drawer } from "antd";
 import {
   BookOutlined,
   DashboardOutlined,
@@ -27,36 +27,30 @@ function getAntdIcon(iconKey) {
   return <AntdIcon />;
 }
 
-export default function Sidebar({ roleKey, collapsed }) {
+/** Shared menu content for Sider and Drawer */
+function SidebarContent({ roleKey, collapsed, onNavigate }) {
   const { pathname } = useLocation();
   const items = navConfig[roleKey] || [];
-
   const menuItems = items.map(({ key, path, label, icon }) => ({
     key: path,
     icon: getAntdIcon(icon),
-    label: <Link to={path}>{label}</Link>,
+    label: onNavigate ? (
+      <Link to={path} onClick={onNavigate}>{label}</Link>
+    ) : (
+      <Link to={path}>{label}</Link>
+    ),
   }));
 
   return (
-    <Sider
-      width={240}
-      collapsed={collapsed}
-      collapsedWidth={80}
-      theme="light"
-      breakpoint="lg"
-      style={{
-        overflow: "auto",
-        height: "100vh",
-        boxShadow: "2px 0 8px rgba(0,0,0,0.06)",
-      }}
-    >
+    <>
       <Link
         to="/"
+        onClick={onNavigate}
         style={{
           display: "block",
           padding: "16px 24px",
           borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
-          height: "65px",
+          minHeight: "65px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -72,6 +66,42 @@ export default function Sidebar({ roleKey, collapsed }) {
         items={menuItems}
         style={{ height: "calc(100vh - 65px)", borderRight: 0, paddingTop: 8 }}
       />
+    </>
+  );
+}
+
+export default function Sidebar({ roleKey, collapsed, drawerOpen, onDrawerClose }) {
+  const isDrawer = typeof drawerOpen === "boolean";
+
+  if (isDrawer) {
+    return (
+      <Drawer
+        title={null}
+        placement="left"
+        onClose={onDrawerClose}
+        open={drawerOpen}
+        size={280}
+        styles={{ body: { padding: 0 } }}
+      >
+        <SidebarContent roleKey={roleKey} collapsed={false} onNavigate={onDrawerClose} />
+      </Drawer>
+    );
+  }
+
+  return (
+    <Sider
+      width={240}
+      collapsed={collapsed}
+      collapsedWidth={80}
+      theme="light"
+      breakpoint="lg"
+      style={{
+        overflow: "auto",
+        height: "100vh",
+        boxShadow: "2px 0 8px rgba(0,0,0,0.06)",
+      }}
+    >
+      <SidebarContent roleKey={roleKey} collapsed={collapsed} />
     </Sider>
   );
 }

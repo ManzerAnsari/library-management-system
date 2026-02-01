@@ -8,7 +8,7 @@ import { getRoleKeyFromPath } from '../../config/navConfig';
 const { Header } = Layout;
 const { Text } = Typography;
 
-export default function Navbar({ collapsed, onToggle }) {
+export default function Navbar({ collapsed, onToggle, isMobile = false }) {
   const user = useAuthStore((s) => s.user);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -44,7 +44,7 @@ export default function Navbar({ collapsed, onToggle }) {
   return (
     <Header
       style={{
-        padding: '0 24px',
+        padding: '0 16px',
         background: '#fff',
         display: 'flex',
         alignItems: 'center',
@@ -54,9 +54,11 @@ export default function Navbar({ collapsed, onToggle }) {
         top: 0,
         zIndex: 99,
         height: '65px',
+        minHeight: '65px',
       }}
+      className="navbar-header"
     >
-      <Space size="middle">
+      <Space size="small" wrap={false}>
         <Button
           type="text"
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -64,22 +66,24 @@ export default function Navbar({ collapsed, onToggle }) {
           style={{ fontSize: 18 }}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         />
-        <Text strong style={{ fontSize: 16, color: 'rgba(0,0,0,0.88)' }}>
-          Library Management System
+        <Text strong className="navbar-title" style={{ fontSize: 14, color: 'rgba(0,0,0,0.88)', maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {isMobile ? 'Library' : 'Library Management System'}
         </Text>
       </Space>
 
       <Dropdown menu={{ items: menuItems }} trigger={['click']} placement="bottomRight">
-        <Space style={{ cursor: 'pointer' }}>
-          <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#2563eb' }} />
-          <Space className="align-middle" orientation="vertical" size={0} style={{ lineHeight: 1.2 }}>
-            <Text strong style={{ fontSize: 14 }}>
-              {user?.fullname ?? 'User'}
-            </Text>
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              {user?.role ?? ''}
-            </Text>
-          </Space>
+        <Space size="small" style={{ cursor: 'pointer' }} wrap={false}>
+          <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#2563eb' }} size={isMobile ? 'default' : 'default'} />
+          {!isMobile && (
+            <Space className="align-middle" orientation="vertical" size={0} style={{ lineHeight: 1.2 }}>
+              <Text strong style={{ fontSize: 14 }}>
+                {user?.fullname ?? 'User'}
+              </Text>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                {user?.role ?? ''}
+              </Text>
+            </Space>
+          )}
         </Space>
       </Dropdown>
     </Header>
