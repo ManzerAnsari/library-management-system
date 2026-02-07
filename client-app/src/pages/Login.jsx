@@ -47,6 +47,10 @@ export default function Login() {
           onFinish={onFinish}
           autoComplete="off"
           requiredMark={false}
+          initialValues={{
+            email: "admin@library.local",
+            password: "Password123!"
+          }}
         >
           <Form.Item
             label="Email"
